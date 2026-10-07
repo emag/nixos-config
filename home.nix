@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, codex-nix, ... }:
 
 {
   home.username = "emag";
@@ -8,6 +8,7 @@
 
   home.packages = with pkgs; [
     wl-clipboard
+    codex-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   # Git

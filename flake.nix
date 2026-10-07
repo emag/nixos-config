@@ -10,6 +10,8 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    codex-nix.url = "github:SecBear/codex-nix";
   };
 
   outputs =
@@ -18,6 +20,7 @@
       nixpkgs,
       nixos-hardware,
       home-manager,
+      codex-nix,
       ...
     }:
     {
@@ -34,6 +37,11 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+
+
+            home-manager.extraSpecialArgs = {
+              inherit codex-nix;
+            };
 
             home-manager.backupFileExtension = "backup";
 
