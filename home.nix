@@ -6,6 +6,10 @@
 
   home.stateVersion = "26.05";
 
+  home.packages = with pkgs; [
+    wl-clipboard
+  ];
+
   # Git
   programs.git = {
     enable = true;
