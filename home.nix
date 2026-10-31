@@ -1,4 +1,4 @@
-{ config, pkgs, codex-nix, ... }:
+{ config, lib, pkgs, codex-nix, ... }:
 
 {
   home.username = "emag";
@@ -28,6 +28,25 @@
     defaultEditor = true;
   };
 
+  # Keep Mozc's config writable while enforcing half-width spaces at activation.
+  home.activation.mozcHalfWidthSpace = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    run ${pkgs.python3}/bin/python3 ${pkgs.writeText "mozc-half-width-space.py" ''
+      import os
+      from pathlib import Path
+
+      path = Path(${builtins.toJSON "${config.xdg.configHome}/mozc/config1.db"})
+      data = path.read_bytes() if path.exists() else b""
+      # Config.space_character_form: protobuf field 47, enum HALF_WIDTH = 2.
+      # Singular protobuf fields use the last value; retain all other settings.
+      setting = bytes([0xf8, 0x02, 0x02])
+      if not data.endswith(setting):
+          path.parent.mkdir(parents=True, exist_ok=True)
+          with path.open("ab") as stream:
+              stream.write(setting)
+          os.chmod(path, 0o600)
+    ''}
+  '';
+
   # GNOME user settings
   dconf.settings = {
     "org/gnome/desktop/input-sources" = {
@@ -38,4 +57,3 @@
   # Let Home Manager manage itself.
   programs.home-manager.enable = true;
 }
-
