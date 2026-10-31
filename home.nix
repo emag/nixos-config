@@ -39,10 +39,14 @@
   ];
 
   # Shell prompt
-  programs.bash.enable = true;
+  programs.zsh = {
+    enable = true;
+    defaultKeymap = "emacs";
+    autocd = true;
+  };
   programs.starship = {
     enable = true;
-    enableBashIntegration = true;
+    enableZshIntegration = true;
   };
 
   # Git

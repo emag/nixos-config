@@ -68,8 +68,11 @@
   };
 
   # User
+  programs.zsh.enable = true;
+
   users.users.emag = {
     isNormalUser = true;
+    shell = pkgs.zsh;
     description = "emag";
     extraGroups = [
       "networkmanager"
@@ -102,4 +105,3 @@
 
   system.stateVersion = "26.05";
 }
-
