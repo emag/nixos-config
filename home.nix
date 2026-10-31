@@ -7,6 +7,16 @@
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
+    (google-chrome.overrideAttrs (oldAttrs: {
+      # Give GNOME a direct path to Chrome's icon instead of a theme lookup.
+      postFixup = (oldAttrs.postFixup or "") + ''
+        substituteInPlace \
+          "$out/share/applications/google-chrome.desktop" \
+          "$out/share/applications/com.google.Chrome.desktop" \
+          --replace-fail "Icon=google-chrome" \
+          "Icon=$out/share/icons/hicolor/256x256/apps/google-chrome.png"
+      '';
+    }))
     wl-clipboard
     codex-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
