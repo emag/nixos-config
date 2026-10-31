@@ -7,6 +7,7 @@
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
+    gh
     (google-chrome.overrideAttrs (oldAttrs: {
       # Give GNOME a direct path to Chrome's icon instead of a theme lookup.
       postFixup = (oldAttrs.postFixup or "") + ''
