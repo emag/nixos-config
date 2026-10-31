@@ -38,6 +38,13 @@
     codex-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
+  # Shell prompt
+  programs.bash.enable = true;
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
   # Git
   programs.git = {
     enable = true;
