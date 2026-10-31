@@ -8,6 +8,22 @@
 
   home.packages = with pkgs; [
     gh
+    ((jetbrains-toolbox.override {
+      # Use JetBrains' download endpoint to obtain the required CDN redirect.
+      fetchzip = args: pkgs.fetchzip (args // {
+        url = builtins.replaceStrings
+          [ "https://download-cdn.jetbrains.com/" ]
+          [ "https://download.jetbrains.com/" ]
+          args.url;
+      });
+    }).overrideAttrs (oldAttrs: {
+      # Give GNOME a direct path to Toolbox's bundled icon.
+      buildCommand = oldAttrs.buildCommand + ''
+        substituteInPlace "$out/share/applications/jetbrains-toolbox.desktop" \
+          --replace-fail "Icon=jetbrains-toolbox" \
+          "Icon=$out/share/pixmaps/jetbrains-toolbox.png"
+      '';
+    }))
     (google-chrome.overrideAttrs (oldAttrs: {
       # Give GNOME a direct path to Chrome's icon instead of a theme lookup.
       postFixup = (oldAttrs.postFixup or "") + ''
