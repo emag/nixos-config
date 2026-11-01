@@ -34,6 +34,24 @@
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
+  # Prefer Japanese glyphs consistently in desktop and Java applications.
+  fonts = {
+    packages = with pkgs; [
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      jetbrains-mono
+    ];
+
+    fontconfig.defaultFonts = {
+      sansSerif = [ "Noto Sans CJK JP" ];
+      serif = [ "Noto Serif CJK JP" ];
+      monospace = [
+        "JetBrains Mono"
+        "Noto Sans Mono CJK JP"
+      ];
+    };
+  };
+
   # Keyboard
   services.xserver.xkb = {
     layout = "us";
