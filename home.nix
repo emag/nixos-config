@@ -8,6 +8,7 @@
 
   home.packages = with pkgs; [
     gh
+    just
     ((jetbrains-toolbox.override {
       # Use JetBrains' download endpoint to obtain the required CDN redirect.
       fetchzip = args: pkgs.fetchzip (args // {
