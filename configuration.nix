@@ -101,6 +101,11 @@
   # Firefox
   programs.firefox.enable = true;
 
+  # Required by the Codex Linux sandbox.
+  environment.systemPackages = with pkgs; [
+    bubblewrap
+  ];
+
   # Unfree packages
   nixpkgs.config.allowUnfree = true;
 
