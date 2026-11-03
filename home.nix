@@ -1,4 +1,4 @@
-{ config, lib, pkgs, codex-nix, ... }:
+{ config, lib, pkgs, codex-nix, mattpocock-skills, ... }:
 
 {
   home.username = "emag";
@@ -38,6 +38,16 @@
     wl-clipboard
     codex-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
+
+  # grill-with-docs composes grilling and domain-modeling.
+  home.file = {
+    ".agents/skills/grill-with-docs".source =
+      "${mattpocock-skills}/skills/engineering/grill-with-docs";
+    ".agents/skills/grilling".source =
+      "${mattpocock-skills}/skills/productivity/grilling";
+    ".agents/skills/domain-modeling".source =
+      "${mattpocock-skills}/skills/engineering/domain-modeling";
+  };
 
   # Shell prompt
   programs.zsh = {

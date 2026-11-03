@@ -12,6 +12,11 @@
     };
 
     codex-nix.url = "github:SecBear/codex-nix";
+
+    mattpocock-skills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
   };
 
   outputs =
@@ -21,6 +26,7 @@
       nixos-hardware,
       home-manager,
       codex-nix,
+      mattpocock-skills,
       ...
     }:
     {
@@ -40,7 +46,7 @@
 
 
             home-manager.extraSpecialArgs = {
-              inherit codex-nix;
+              inherit codex-nix mattpocock-skills;
             };
 
             home-manager.backupFileExtension = "backup";
